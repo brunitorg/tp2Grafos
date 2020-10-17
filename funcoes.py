@@ -1,9 +1,8 @@
 # implementação dos algoritmos solicitados no TP2
 import random
 from itertools import permutations
-import sys
 
-
+# Cria grafos aleatórios por matriz de adjacencias
 def criarGrafoMatriz(vertices, pesoMin, pesoMax):
     arestas = (vertices * (vertices - 1)) / 2
     G = [[0 for i in range(vertices)] for i in range(vertices)]
@@ -18,7 +17,7 @@ def criarGrafoMatriz(vertices, pesoMin, pesoMax):
             i += 1
     return G
 
-
+#Metodo heurístico
 def vizinhoMaisProximo(matriz):
     u = 0
     C = []
@@ -43,7 +42,7 @@ def vizinhoMaisProximo(matriz):
     #retorna ciclo hamiltoniano
     return C
 
-
+# Método exato
 def forcaBruta(matriz):
     custoMin = float('inf')
     Cbest = None
@@ -62,7 +61,7 @@ def forcaBruta(matriz):
     # retorna o ciclo de menor custo
     return Cbest
 
-
+# Recuperar custo da rota encontrada
 def recuperaCusto(caminho, matriz):
     custo = 0
     for i in range(len(caminho)):
