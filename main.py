@@ -1,30 +1,44 @@
-import grafo
+# iniciar aplicação
+import funcoes
+import sys
 import time
 
+# Recebe valores para criar grafo
+vertices = int(input("Número de vértices: "))
+pesoMin = int(input("Peso mínimo das arestas: "))
+pesoMax = int(input("Peso máxima das arestas: "))
+if vertices <= 0 or pesoMin <= 0 or pesoMax <= 0:
+    sys.exit("Valores devem ser maiores que 0!")
 
-print('Grafo:')
-graph = grafo.criarGrafoMatriz(5, 1, 9)
+imprimir = int(input("Deseja imprimir o grafo? 1 - Sim // 0 - Não: "))
 
-for i in range(len(graph)):
-    print(graph[i])
-print()
+# Recebe o algoritmo a ser usado
+algoritmo = int(input("Escolha o Algoritmo:\n  1 - Vizinho Mais Próximo\n  2 - Força-Bruta\n"))
+if algoritmo <= 0 or algoritmo > 2:
+    sys.exit("Algoritmo inválido!")
 
-option = int(input("Algoritmo: \n\t1 Guloso\n\t2 Forca Bruta\n"))
+print("Processando...")
 
-print()
-print('Processando...')
-print()
+if algoritmo == 1:
+    graph = funcoes.criarGrafoMatriz(vertices, pesoMin, pesoMax)
+    if imprimir == 1:
+        print(graph)
+    print("---------------Algoritmo Guloso do Vizinho Mais Próximo---------------")
+    tempo = time.time()
+    ciclo = funcoes.vizinhoMaisProximo(graph)
+    tempo = time.time() - tempo
+    custo = funcoes.recuperaCusto(ciclo,graph)
+    print("Rota: ", ciclo, "\nCusto: ", custo, "\nTempo: ", tempo)
 
-inicio = time.time()
-if option == 1:
-    path = grafo.vizinhoMaisProximo(graph)
-    fim = time.time()
-    print(f'Caminho: {path}')
-    print(f'Custo do Caminho: {grafo.recuperaCusto(path,graph)}')
-    print(f'Tempo: {fim - inicio}')
-if option == 2:
-    path = grafo.forcaBruta(graph)
-    fim = time.time()
-    print(f'Caminho: {path}')
-    print(f'Custo do Caminho: {grafo.recuperaCusto(path,graph)}')
-    print(f'Tempo: {fim - inicio}')
+else:
+    graph = funcoes.criarGrafoMatriz(vertices, pesoMin, pesoMax)
+    if imprimir == 1:
+        print(graph)
+    print("---------------Algoritmo de Força-Bruta---------------")
+    tempo = time.time()
+    ciclo = funcoes.forcaBruta(graph)
+    tempo = time.time() - tempo
+    custo = funcoes.recuperaCusto(ciclo,graph)
+    print("Rota: ", ciclo, "\nCusto: ", custo, "\nTempo: ", tempo)
+
+print(":----------------Obrigado----------------: ")
